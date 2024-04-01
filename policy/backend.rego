@@ -1,5 +1,8 @@
 package app.backend
 
+import future.keywords.if
+import future.keywords.in
+
 default allow := false
 
 allow if {
