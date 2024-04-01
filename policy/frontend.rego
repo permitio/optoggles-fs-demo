@@ -3,8 +3,6 @@ package app.frontend
 import future.keywords.in
 import data.app.backend
 
-default billing_users = set()
-default us_users = set()
 
 billing_users[user] {
     # for each user
