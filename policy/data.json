@@ -1,0 +1,80 @@
+{
+  "users": {
+    "alice": {
+      "roles": [
+        "admin"
+      ],
+      "location": {
+        "country": "US",
+        "ip": "8.8.8.8"
+      }
+    },
+    "bob": {
+      "roles": [
+        "employee",
+        "billing"
+      ],
+      "location": {
+        "country": "US",
+        "ip": "8.8.8.8"
+      }
+    },
+    "eve": {
+      "roles": [
+        "customer"
+      ],
+      "location": {
+        "country": "US",
+        "ip": "8.8.8.8"
+      }
+    }
+  },
+  "role_permissions": {
+    "customer": [
+      {
+        "action": "read",
+        "resource": "dog"
+      },
+      {
+        "action": "read",
+        "resource": "cat"
+      },
+      {
+        "action": "adopt",
+        "resource": "dog"
+      },
+      {
+        "action": "adopt",
+        "resource": "cat"
+      }
+    ],
+    "employee": [
+      {
+        "action": "read",
+        "resource": "dog"
+      },
+      {
+        "action": "read",
+        "resource": "cat"
+      },
+      {
+        "action": "update",
+        "resource": "dog"
+      },
+      {
+        "action": "update",
+        "resource": "cat"
+      }
+    ],
+    "billing": [
+      {
+        "action": "read",
+        "resource": "finance"
+      },
+      {
+        "action": "update",
+        "resource": "finance"
+      }
+    ]
+  }
+}
