@@ -4,6 +4,9 @@ import future.keywords.if
 import future.keywords.in
 import data.app.backend
 
+default billing_users = []
+default us_users = []
+
 billing_users[user] if {
     # for each user
     some user,_ in data.users
