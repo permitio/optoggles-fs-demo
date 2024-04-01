@@ -1,2 +1,3 @@
-example/data.json
-example/features.rego
+policy/data.json
+policy/backend.rego
+policy/frontend.rego
