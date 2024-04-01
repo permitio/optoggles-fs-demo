@@ -2,7 +2,7 @@ package app.frontend
 
 import future.keywords.if
 import future.keywords.in
-import data.permit.backend
+import data.app.backend
 
 billing_users[user] if {
     # for each user
