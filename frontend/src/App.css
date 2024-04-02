@@ -1,47 +1,75 @@
-.App {
-  text-align: center;
+/* Add a general font family */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f7f6; /* light background for a fresh look */
+  color: #333; /* darker text for better readability */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.main{
+.main {
+  position: relative;
   margin: 20px auto;
   padding: 40px 20px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   border-radius: 20px;
-  border: gray 1px solid;
-  max-width: 550px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* subtle shadow */
+  max-width: 650px; /* slightly wider */
+  background: white; /* white content area */
 }
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+h1, h2 {
+  color: #1f618d; /* dark blue for headers */
+}
+
+/* Improved input field */
+.TextField {
+  margin: 20px 0;
+}
+
+/* Chips */
+.Chip {
+  margin: 5px;
+}
+
+/* Add some hover effects for buttons and links */
+button:hover,
+a:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .main {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px 10px;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+/*.header {*/
+/*  width: 100%;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: flex-start; !* Aligns children (like your logo) to the start *!*/
+/*  padding-left: 20px; !* Gives some space from the left edge *!*/
+/*}*/
+
+.logo-container {
+  position: absolute;
+  bottom: 0px; /* Adjusted for a bit of spacing from the top */
+  right: 0px; /* Adjusted for a bit of spacing from the left */
+  /*background: #4a4a4a; !* Dark background for the logo *!*/
+  padding: 5px; /* Slightly less padding */
+  border-radius: 0 0 10px 0; /* Adjusted to a smaller radius */
+  z-index: 10; /* Ensure the logo is above other elements */
+}
+
+.App-logo {
+  width: 120px; /* Increase the logo size */
+  height: auto; /* Maintain aspect ratio */
 }

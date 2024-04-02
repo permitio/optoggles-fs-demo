@@ -5,6 +5,7 @@ import {OpenFeature, OpenFeatureProvider, useBooleanFlagValue} from "@openfeatur
 import {Chip, CircularProgress, TextField} from "@mui/material";
 import {JsonViewer} from "@textea/json-viewer";
 import './App.css';
+import PermitLogo from './PermitLogo.svg';
 
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:8081';
 const clientEnvKey = process.env.CLIENT_ENV_KEY;
@@ -85,18 +86,22 @@ export const App = () => {
     return (
         <div className={'main'}>
             <div>
-
+                <div className="logo-container">
+                    <img src={PermitLogo} alt="Permit.io Logo" className="App-logo"/>
+                </div>
                 <h1>Feature Toggling Demo</h1>
                 <Suspense fallback={<CircularProgress/>}>
-                    <TextField id="user-context-field" label="User" variant="outlined" onChange={handleUserChange}/>
+                    <TextField id="user-context-field" label="User" variant="outlined" className="TextField"
+                               onChange={handleUserChange}/>
                     <h2>User Features:</h2>
                     <OpenFeatureProvider>
                         <FeatureToggled feature="us-feature" callback={onFeatureFlagChange}>
-                            <Chip key="us-feature-chip" label="us-feature" variant="outlined"/>
+                            <Chip key="us-feature-chip" label="us-feature" variant="outlined" className="Chip"/>
                         </FeatureToggled>
 
                         <FeatureToggled feature="billing-feature" callback={onFeatureFlagChange}>
-                            <Chip key="billing-feature-chip" label="billing-feature" variant="outlined"/>
+                            <Chip key="billing-feature-chip" label="billing-feature" variant="outlined"
+                                  className="Chip"/>
                         </FeatureToggled>
                     </OpenFeatureProvider>
                     <h2>User Roles:</h2>
