@@ -14,8 +14,8 @@ billing_users[user] {
 
 us_users[user] {
     # for each user
-    some user,_ in data.policy.users
+    some user,user_obj in data.policy.users
     # check if the user is from the US ( has the location.country field set to "US")
-    user.location.country == "US"
+    user_obj.location.country == "US"
     # if so, add the user to the us_users set
 }
