@@ -1,0 +1,70 @@
+version: "3.8"
+services:
+  broadcast_channel:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  opal_server:
+    image: permitio/opal-server:latest
+    environment:
+#      - in case of private repo
+#      - OPAL_POLICY_REPO_URL=git@github.com:permitio/optoggles-fs-demo.git
+#      - OPAL_POLICY_REPO_SSH_KEY=-----BEGIN OPENSSH PRIVATE KEY-----.....-----END OPENSSH PRIVATE KEY-----_
+      - OPAL_POLICY_REPO_URL=https://github.com/permitio/optoggles-fs-demo.git
+      - OPAL_POLICY_REPO_MAIN_BRANCH=main
+      - OPAL_POLICY_REPO_MANIFEST_PATH=policy/.manifest
+      - OPAL_POLICY_REPO_POLLING_INTERVAL=5
+      - OPAL_BROADCAST_URI=postgres://postgres:postgres@broadcast_channel:5432/postgres
+      - UVICORN_NUM_WORKERS=4
+      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"http://opal-server:7002/policy-data","topics":["policy_data"],"dst_path":""}]}}
+    ports:
+      - "7002:7002"
+    depends_on:
+      - broadcast_channel
+
+  opal_client:
+    image: permitio/opal-client:latest
+    environment:
+      - OPAL_SERVER_URL=http://opal_server:7002
+      - OPAL_SHOULD_REPORT_ON_DATA_UPDATES=True
+      - OPAL_DEFAULT_UPDATE_CALLBACKS={"callbacks":["http://opal_server:7002/data/callback_report"]}
+      - OPAL_OPA_HEALTH_CHECK_POLICY_ENABLED=True
+    ports:
+      - "7000:7000"
+      - "8181:8181"
+    depends_on:
+      - opal_server
+    command: sh -c "/usr/wait-for.sh opal_server:7002 --timeout=20 -- /start.sh"
+
+  optoggles:
+    image: permitio/optoggles:latest
+    depends_on:
+      - opal_client
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/policy/launchdarkly-config.yaml:/etc/optoggles/config.yaml
+  #      - $PWD/restapi-config.yaml:/etc/optoggles/config.yaml
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    environment:
+      - OPA_URL=http://opal_client:8181
+    restart: on-failure
+    ports:
+      - "8081:8081"
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      - BACKEND_URL=http://backend:8081
+      - CLIENT_ENV_KEY=...
+    restart: on-failure
+    ports:
+      - "3000:3000"
